@@ -19,6 +19,7 @@
         }
         #problem {
             font-size: 3rem;
+            margin-top: 23px;
         }
         #winner,
         #loser {
@@ -26,6 +27,13 @@
             color: green;
         }
         #loser { color: red;}
+        #main,
+        #score {
+            font-family: 'Julius Sans One', sans-serif;
+        }
+        #score {
+            font-size: 1.2rem;
+        }
         input {
             border: none;
             background-color: #EEE;
@@ -34,8 +42,13 @@
             border-bottom: 2px dashed red;
             text-align: center;
         }
-        #main {
-            font-family: 'Julius Sans One', sans-serif;
+        .container {
+            background-color: #000;
+            color: #DDD;
+            border-radius: 9px;
+        }
+        .header {
+            margin-top: 23px;
         }
         .incorrect {
             animation: blink .5s forwards;
@@ -80,7 +93,6 @@
                 incorrect: false,
                 countWrong: 0
             })
-
             function inputKeyPress(event) {
                 if (event.key === "Enter") {
                     const answer = parseInt(state.response)
@@ -105,30 +117,62 @@
                     }
                 }
             }
-
             function updateResponse(event) {
                 setState({
                     ...state,
                     response: event.target.value
                 })
             }
-
-            if (state.score === 3) {
+            if (state.score === 10) { /*** se gana con 10 aciertos ***/
                 return (
-                    <div id="winner" class="winner mt-5">
-                        You Won!
+                    <div>
+                        <div id="main">
+                                <nav class="navbar bg-body-tertiary">
+                                    <div class="container-fluid">
+                                        <a class="navbar-brand" href="#">
+                                            <img src="./Hc-logo-1200x300.png" width="100" alt="HcDevLabs logo" />
+                                        </a>
+                                        <h1>Sum Game</h1>
+                                    </div>
+                                </nav>
+                            </div>
+                        <div id="winner" class="container winner mt-5">
+                            <h1>You Won!</h1>
+                            <button
+                                onClick={restartGame}
+                                type="button" 
+                                class="btn btn-outline-secondary"
+                            >Restart
+                            </button>
+                        </div>
                     </div>
                 )
             }
-
+            if (state.response == 11) console.log("Schúpalo Entonce'!")
+            if (state.response == 12) console.log("Pa' que gozes!")
+            if (state.response == 13) console.log('Chúkiti!')
             if (state.countWrong === 2) {
                 return (
-                    <div class="loser">
-                        <p>You Lose!</p>
-                        <button
-                            onClick={restartGame}
-                        >Restart
-                        </button>
+                    <div>
+                        <div id="main">
+                            <nav class="navbar bg-body-tertiary">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand" href="#">
+                                        <img src="./Hc-logo-1200x300.png" width="100" alt="HcDevLabs logo" />
+                                    </a>
+                                    <h1>Sum Game</h1>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="container mt-5 loser">
+                            <h1>You Lose!</h1>
+                            <button
+                                onClick={restartGame}
+                                type="button" 
+                                class="btn btn-outline-secondary"
+                            >Restart
+                            </button>
+                        </div>
                     </div>
                 )
             }
@@ -165,7 +209,7 @@
                             onChange={updateResponse}
                             value={state.response}
                         />
-                        <div>Score: {state.score}</div>
+                        <div class="mt-3 mb-3" id="score">Score: {state.score}</div>
                     </div>
                 </div>
             )
